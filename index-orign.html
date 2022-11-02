@@ -11,10 +11,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet"/>
     <style>
-        body {
-            margin: 0;
-            background-color: #fff;
-        }
+
 
         [tabindex="-1"]:focus {
             outline: 0 !important;
@@ -123,10 +120,6 @@
             height: 100% !important;
         }
 
-        .mb-0 {
-            margin-bottom: 0 !important;
-        }
-
         .py-5 {
             padding-top: 3rem !important;
             padding-bottom: 3rem !important;
@@ -141,6 +134,7 @@
             iframe {
                 display: none;
             }
+
         }
 
         @media (min-width: 768px) {
@@ -171,6 +165,8 @@
         }
 
         body {
+            margin: 0;
+            background-color:#fff;
             height: 100%;
             position: relative;
             font-family: 'Source Sans Pro', serif;
@@ -182,7 +178,6 @@
             height: 100% !important;
             width: 100% !important;
             overflow: hidden;
-            background-color:#cd9557;
             opacity: .75;
             z-index: -1
         }
@@ -257,7 +252,21 @@
         }
 
         .msg {
+            width: 80%;
+            word-wrap: break-word !important;
+        }
+
+        .language {
+            width: 90%;
             margin-left: 1em;
+        }
+        .language * {
+            margin: 0 0.1rem;
+            font-size: small;
+        }
+
+        .lang.sel {
+            text-decoration: underline;
         }
 
         #logo {
@@ -466,10 +475,30 @@
 	 M1586.1,753.2c26,0,51.4,0,76.9,0c-12.6-27.4-25.2-54.9-38-82.5C1612,698.1,1599.3,725.2,1586.1,753.2z"/>
 </svg>
 
-                    <p class="msg">
-                        Bogosluženje svake nedelje od 18.00 do 19.00.
+                    <p class="msg translate"
+                       cyr="Богослужење, <nobr>сваке недеље</nobr> <nobr>од 18:00 до 19:00.</nobr>"
+                       lat="Bogosluženje, <nobr>svake nedelje</nobr> <nobr>od 18:00 do 19:00.</nobr>"
+                       en="<nobr>Divine Liturgy,</nobr> <nobr>every Sunday</nobr> <nobr>from 18:00 to 19:00.</nobr>"
+                       ru="Богослужение, <nobr>каждое воскресенье</nobr> <nobr>с 18:00 до 19:00.</nobr>"
+                    >
+                        Bogosluženje <nobr>svake nedelje</nobr> <nobr>od 18:00 do 19:00.</nobr>
                     </p>
-                    <p class="msg"><a href="https://goo.gl/maps/5eGiAtR56WrZqETS7">Višnjička 49a, Beograd.</a></p>
+                    <p class="msg"><a href="https://goo.gl/maps/5eGiAtR56WrZqETS7"
+                                      class="translate"
+                                      cyr="Вишњичка 49а, Београд."
+                                      lat="Višnjička 49a, Beograd."
+                                      en="Višnjička 49a, Belgrade."
+                                      ru="Вишњичка 49а, Белград."
+                    >Višnjička 49a, Beograd.</a></p>
+                    <p class="language">
+                        <a class="lang cyr" href="javascript:lang('cyr')">Ћирилица</a>
+                        <span>|</span>
+                        <a class="lang lat" href="javascript:lang('lat')">latinica</a>
+                        <span>|</span>
+                        <a class="lang en" href="javascript:lang('en')">english</a>
+                        <span>|</span>
+                        <a class="lang ru" href="javascript:lang('ru')">русский</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -477,7 +506,7 @@
 </div>
 
 <div class="social-icons">
-    <ul class="mb-0">
+    <ul>
         <li class="map">
             <a href="https://goo.gl/maps/5eGiAtR56WrZqETS7">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -502,7 +531,30 @@
     </ul>
 </div>
 
+<script>
+    function lang(l) {
+        let el = document.getElementsByClassName(l);
+        if (el.length !== 1) {
+            return
+        }
+        el = el[0];
+        Array.from(document.getElementsByClassName('lang')).forEach((e) => {
+            e.classList.remove("sel")
+        });
 
+        Array.from(document.getElementsByClassName('translate')).forEach((e) => {
+            e.innerHTML = e.getAttribute(l);
+        });
+
+        el.classList.add("sel");
+    }
+    let language = window.navigator.userLanguage || window.navigator.language;
+    language = language.substring(0,2).toLowerCase();
+    if (document.getElementsByClassName(language).length === 0) {
+        language = 'lat';
+    }
+    lang(language)
+</script>
 </body>
 
 </html>
