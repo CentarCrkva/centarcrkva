@@ -14,7 +14,8 @@ $html =~ s{<script>(.*)</script>}{minify_js($1)}gesm;
 for ($html) {
     s/\n/ /g;
     s/\s+/ /g;
-    s/\s*([<>])\s*/$1/g;
+    s/\s+([<>])/ $1/g;
+    s/([<>])\s+/$1 /g;
 }
 write_file 'index.html', $html;
 
